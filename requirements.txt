@@ -5,3 +5,30 @@ scikit-learn
 matplotlib
 seaborn
 plotly.express
+skopt
+sklearn.ensemble
+sklearn.metrics
+sklearn.neighbors
+sklearn.tree
+sklearn.discriminant_analysis
+sklearn.metrics
+sklearn.model_selection
+sklearn.linear_model
+sklearn.naive_bayes
+sklearn.svm
+sklearn.preprocessingr
+sklearn.preprocessing
+sklearn.linear_model import RidgeClassifierCV
+sklearn.dummy import DummyClassifier
+sklearn.calibration import CalibratedClassifierCV
+sklearn.semi_supervised import LabelSpreading, LabelPropagation
+skopt import BayesSearchCV
+sklearn.model_selection import StratifiedKFold
+sklearn.model_selection import train_test_split
+help_functions
+tables
+time
+asyncio
+sys
+re
+PIL
