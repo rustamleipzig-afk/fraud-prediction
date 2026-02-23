@@ -118,9 +118,9 @@ parent_path = os.path.dirname(current_path)
 
 print(parent_path)
 
-path_to_data = parent_path + "\\Streamlit\\data"
-path_to_images = parent_path + "\\Streamlit\\pic"
-path_to_map_data = parent_path + "\\Streamlit\\data\\state_fraud_losses.csv"
+path_to_data = parent_path + "/fraud-prediction/data"
+path_to_images = parent_path + "/fraud-prediction/pic"
+path_to_map_data = parent_path + "/fraud-prediction/data/state_fraud_losses.csv"
 
 # =====================================================
 # Global Header Image (shown on every page)
@@ -144,8 +144,8 @@ def init():
     'min_samples_leaf': (1, 20, 'uniform'),
     'max_features': [None, 'sqrt', 'log2']
     }
-    X_train_undersampled = pd.read_csv(f'{path_to_data}\\X_train_undersampled.csv', index_col=0)
-    y_train_undersampled = pd.read_csv(f'{path_to_data}\\y_train_undersampled.csv').squeeze("columns")
+    X_train_undersampled = pd.read_csv(f'{path_to_data}/X_train_undersampled.csv', index_col=0)
+    y_train_undersampled = pd.read_csv(f'{path_to_data}/y_train_undersampled.csv').squeeze("columns")
     X_test = pd.read_csv(f'{path_to_data}\\X_test.csv', index_col=0)
     y_test = pd.read_csv(f'{path_to_data}\\y_test.csv').squeeze("columns")
 
