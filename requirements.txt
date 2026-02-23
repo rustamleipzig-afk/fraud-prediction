@@ -25,10 +25,3 @@ sklearn.semi_supervised import LabelSpreading, LabelPropagation
 skopt import BayesSearchCV
 sklearn.model_selection import StratifiedKFold
 sklearn.model_selection import train_test_split
-help_functions
-tables
-time
-asyncio
-sys
-re
-PIL
