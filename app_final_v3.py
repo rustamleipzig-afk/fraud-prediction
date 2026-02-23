@@ -117,9 +117,9 @@ parent_path = os.path.dirname(current_path)
 
 print(parent_path)
 
-path_to_data = parent_path + "/Streamlit/data"
-path_to_images = parent_path + "/Streamlit/pic"
-path_to_map_data = parent_path + "/Streamlit/data/state_fraud_losses.csv"
+path_to_data = parent_path + "/data"
+path_to_images = parent_path + "/pic"
+path_to_map_data = parent_path + "/data/state_fraud_losses.csv"
 
 # =====================================================
 # Global Header Image (shown on every page)
