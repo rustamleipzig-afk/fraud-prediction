@@ -1,32 +1,13 @@
-import streamlit as st
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
-import plotly.express as px
-from sklearn.ensemble import BaggingClassifier, RandomForestClassifier, GradientBoostingClassifier, AdaBoostClassifier, ExtraTreesClassifier
-from sklearn.metrics import accuracy_score, classification_report
-from sklearn.neighbors import NearestCentroid, KNeighborsClassifier
-from sklearn.tree import DecisionTreeClassifier, ExtraTreeClassifier
-from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis, LinearDiscriminantAnalysis
-from sklearn.metrics import confusion_matrix, roc_auc_score, matthews_corrcoef, average_precision_score, f1_score
-from sklearn.model_selection import StratifiedKFold, train_test_split
-from sklearn.linear_model import LogisticRegression, RidgeClassifier, SGDClassifier, PassiveAggressiveClassifier, Perceptron
-from sklearn.naive_bayes import GaussianNB, BernoulliNB
-from sklearn.svm import LinearSVC, SVC
-from sklearn.preprocessing import OneHotEncoder
-from sklearn.preprocessing import MinMaxScaler
-from sklearn.linear_model import RidgeClassifierCV
-from sklearn.dummy import DummyClassifier
-from sklearn.calibration import CalibratedClassifierCV
-from sklearn.semi_supervised import LabelSpreading, LabelPropagation
-from skopt import BayesSearchCV
-from sklearn.model_selection import StratifiedKFold
-from sklearn.model_selection import train_test_split
-from help_functions import functions
-from tables import all_reports as reports
-import time
-import asyncio
-import sys
-import re
-from PIL import Image
+imblearn==0.0
+lightgbm==4.6.0
+matplotlib==3.10.8
+numpy==2.4.2
+pandas==3.0.1
+Pillow==12.1.1
+plotly==6.5.2
+scikit_learn==1.8.0
+scipy==1.17.1
+seaborn==0.13.2
+statsmodels==0.14.6
+streamlit==1.54.0
+xgboost==3.2.0
