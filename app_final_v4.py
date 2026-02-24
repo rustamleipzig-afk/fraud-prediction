@@ -838,7 +838,7 @@ if page == pages[4] :
     
     st.markdown(
         f"<div style='background-color:{color}; padding:10px; font-weight:bold;'>"
-        f"Fraud detected: {score.item()}"
+        f"Fraud detected: {score.item()} (1 = Fraud, 0 = Not Fraud)"
         "</div>",
         unsafe_allow_html=True
     )
