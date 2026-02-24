@@ -95,8 +95,8 @@ class all_reports():
     },
     'DeepLearningModel': {
         'default': {
-        '0': {'precision': 0.99, 'recall': 0.63, 'f1-score': 0.77, 'accuracy': 0.65, 'support': 2899},
-        '1': {'precision': 0.13, 'recall': 0.89, 'f1-score': 0.23, 'accuracy': 0.65, 'support': 185}
+        '0': {'precision': 0.99, 'recall': 0.62, 'f1-score': 0.76, 'accuracy': 0.64, 'support': 2899},
+        '1': {'precision': 0.13, 'recall': 0.92, 'f1-score': 0.24, 'accuracy': 0.64, 'support': 185}
         }
     }
     }
@@ -134,7 +134,7 @@ class all_reports():
                             },
                             'DeepLearningModel': 
                             {
-                            'default': [[1840, 1059], [21, 164]]
+                            'default': [[1801, 1098], [14, 171]]
                             },
                             'LabelSpreading': 
                             {
