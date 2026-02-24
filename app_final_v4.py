@@ -118,15 +118,15 @@ parent_path = os.path.dirname(current_path)
 
 print(parent_path)
 
-path_to_data = parent_path + "\\Streamlit\\data"
-path_to_images = parent_path + "\\Streamlit\\pic"
-path_to_map_data = parent_path + "\\Streamlit\\data\\state_fraud_losses.csv"
+path_to_data = parent_path + "/fraud-prediction/data"
+path_to_images = parent_path + "/fraud-prediction/pic"
+path_to_map_data = parent_path + "/fraud-prediction/data/state_fraud_losses.csv"
 
 # =====================================================
 # Global Header Image (shown on every page)
 # =====================================================
 if os.path.exists(path_to_images):
-    st.image(path_to_images + "\\liora.png", width=130)
+    st.image(path_to_images + "/liora.png", width=130)
 else:
     st.info(f"Header image not found at: `{path_to_images}`")
 
@@ -144,14 +144,14 @@ def init():
     'min_samples_leaf': (1, 20, 'uniform'),
     'max_features': [None, 'sqrt', 'log2']
     }
-    X_train_undersampled = pd.read_csv(f'{path_to_data}\\X_train_undersampled.csv', index_col=0)
-    y_train_undersampled = pd.read_csv(f'{path_to_data}\\y_train_undersampled.csv').squeeze("columns")
-    X_test = pd.read_csv(f'{path_to_data}\\X_test.csv', index_col=0)
-    y_test = pd.read_csv(f'{path_to_data}\\y_test.csv').squeeze("columns")
+    X_train_undersampled = pd.read_csv(f'{path_to_data}/X_train_undersampled.csv', index_col=0)
+    y_train_undersampled = pd.read_csv(f'{path_to_data}/y_train_undersampled.csv').squeeze("columns")
+    X_test = pd.read_csv(f'{path_to_data}/X_test.csv', index_col=0)
+    y_test = pd.read_csv(f'{path_to_data}/y_test.csv').squeeze("columns")
 
     # load the selected data:
-    X_selected = pd.read_csv(f'{path_to_data}\\X_selected.csv', index_col=0)
-    y_selected = pd.read_csv(f'{path_to_data}\\y_selected.csv').squeeze("columns")
+    X_selected = pd.read_csv(f'{path_to_data}/X_selected.csv', index_col=0)
+    y_selected = pd.read_csv(f'{path_to_data}/y_selected.csv').squeeze("columns")
     # split the selected data into train and test sets
     X_train_selected, X_test_selected, y_train_selected, y_test_selected = train_test_split(X_selected, y_selected, test_size=0.2, random_state=42, stratify=y_selected)
     clf_demo = helper.train('DecisionTreeClassifier',X_train_selected, y_train_selected)
@@ -747,7 +747,7 @@ if page == pages[3] :
     col1, col2 = st.columns([1, 2])                     
 
     with col1:
-      st.image(f"{path_to_images}\\dl.png", caption="Deep Learning model architecture", width='stretch')                        
+      st.image(f"{path_to_images}/dl.png", caption="Deep Learning model architecture", width='stretch')                        
 
     with col2:
       mod_tbl = rep.create_classification_report('DeepLearningModel')
