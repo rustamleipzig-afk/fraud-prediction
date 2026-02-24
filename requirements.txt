@@ -10,3 +10,4 @@ Pillow
 xgboost
 lightgbm
 imbalanced-learn
+statsmodels
