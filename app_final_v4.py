@@ -118,15 +118,15 @@ parent_path = os.path.dirname(current_path)
 
 print(parent_path)
 
-path_to_data = parent_path + "/fraud-prediction/data"
-path_to_images = parent_path + "/fraud-prediction/pic"
-path_to_map_data = parent_path + "/fraud-prediction/data/state_fraud_losses.csv"
+path_to_data = parent_path + "\\Streamlit\\data"
+path_to_images = parent_path + "\\Streamlit\\pic"
+path_to_map_data = parent_path + "\\Streamlit\\data\\state_fraud_losses.csv"
 
 # =====================================================
 # Global Header Image (shown on every page)
 # =====================================================
 if os.path.exists(path_to_images):
-    st.image(path_to_images + "/liora.png", width=130)
+    st.image(path_to_images + "\\liora.png", width=130)
 else:
     st.info(f"Header image not found at: `{path_to_images}`")
 
@@ -144,14 +144,14 @@ def init():
     'min_samples_leaf': (1, 20, 'uniform'),
     'max_features': [None, 'sqrt', 'log2']
     }
-    X_train_undersampled = pd.read_csv(f'{path_to_data}/X_train_undersampled.csv', index_col=0)
-    y_train_undersampled = pd.read_csv(f'{path_to_data}/y_train_undersampled.csv').squeeze("columns")
-    X_test = pd.read_csv(f'{path_to_data}/X_test.csv', index_col=0)
-    y_test = pd.read_csv(f'{path_to_data}/y_test.csv').squeeze("columns")
+    X_train_undersampled = pd.read_csv(f'{path_to_data}\\X_train_undersampled.csv', index_col=0)
+    y_train_undersampled = pd.read_csv(f'{path_to_data}\\y_train_undersampled.csv').squeeze("columns")
+    X_test = pd.read_csv(f'{path_to_data}\\X_test.csv', index_col=0)
+    y_test = pd.read_csv(f'{path_to_data}\\y_test.csv').squeeze("columns")
 
     # load the selected data:
-    X_selected = pd.read_csv(f'{path_to_data}/X_selected.csv', index_col=0)
-    y_selected = pd.read_csv(f'{path_to_data}/y_selected.csv').squeeze("columns")
+    X_selected = pd.read_csv(f'{path_to_data}\\X_selected.csv', index_col=0)
+    y_selected = pd.read_csv(f'{path_to_data}\\y_selected.csv').squeeze("columns")
     # split the selected data into train and test sets
     X_train_selected, X_test_selected, y_train_selected, y_test_selected = train_test_split(X_selected, y_selected, test_size=0.2, random_state=42, stratify=y_selected)
     clf_demo = helper.train('DecisionTreeClassifier',X_train_selected, y_train_selected)
@@ -720,6 +720,23 @@ if page == pages[3] :
     height = (len(df) + 1) * row_height
     st.dataframe(df, width='stretch', height=height)
 
+    best_after_feature_selection = pd.DataFrame([
+    ["DecisionTreeClassifier",         0.23, 0.97, "Boosting"],
+    ["LogisticRegression",             0.23, 0.92, "Boosting"],
+    ["QuadraticDiscriminantAnalysis",  0.23, 0.97, "Boosting"],
+    ["NearestCentroid",                0.22, 0.85, "Boosting"],
+    ["LabelSpreading",                 0.21, 0.95, "Boosting"],
+    ], columns=["Model", "Best F1 Score", "Best Recall", "Variant"]).sort_values(
+    by=["Best F1 Score", "Best Recall"],
+    ascending=[False, False]
+    ).reset_index(drop=True)
+    st.write("### Best models after feature selection based on F1 Score and Recall")
+    row_height = 35  # adjust if needed
+    height = (len(best_after_feature_selection) + 1) * row_height
+    st.dataframe(best_after_feature_selection, width=600, height=height)
+
+
+
 
   ### Section for Deep Learning model results
   st.write("# Deep learning model")
@@ -730,7 +747,7 @@ if page == pages[3] :
     col1, col2 = st.columns([1, 2])                     
 
     with col1:
-      st.image(f"{path_to_images}/dl.png", caption="Deep Learning model architecture", width='stretch')                        
+      st.image(f"{path_to_images}\\dl.png", caption="Deep Learning model architecture", width='stretch')                        
 
     with col2:
       mod_tbl = rep.create_classification_report('DeepLearningModel')
@@ -745,46 +762,61 @@ if page == pages[4] :
     st.write("### Best model: BaggingClassifier with DecisionTreeClassifier as base estimator")                  
 
     if st.checkbox("Show the selected claim for the demo prediction"):
-        if st.slider("Age of Policyholder", 18, 80, 30, key='age') < 30:
-            st.write("Selected Age: ", st.session_state['age'])
-            X_test_selected.loc[X_test_selected.index[0], 'Age'] = st.session_state['age']
-            # use minmax scaler to scale the age value between 0 and 1 based on the min and max age in the training data
-            from sklearn.preprocessing import MinMaxScaler
-            scaler = MinMaxScaler()
-            X_test_selected['Age'] = scaler.fit_transform(X_test_selected[['Age']])
+        if st.slider("Age of Policyholder", 18, 80, 30, key='age'):
+            #st.write("Selected Age: ", st.session_state['age'])
+            X_test_selected.loc[X_test_selected.index[16], 'Age'] = st.session_state['age']
+            #use minmax scaler to scale the age value between 0 and 1 based on the min and max age in the training data
+            #from sklearn.preprocessing import MinMaxScaler
+            #scaler = MinMaxScaler()
+            #X_test_selected.loc[X_test_selected.index[16], 'Age'] = scaler.fit_transform(X_test_selected.loc[X_test_selected.index[16], 'Age'])
+            X_test_selected.loc[X_test_selected.index[16], 'Age'] = (X_test_selected.loc[X_test_selected.index[16], 'Age'] - 18)/(80-18)
+
 
         
         if st.selectbox("Vehicle Category", ["Sport", "Utility"], key="Sedan") == "Sport":
-            st.write("Selected Vehicle Category: Sport")
+            #.write("Selected Vehicle Category: Sport")
             X_test_selected.loc[X_test_selected.index[16], 'VehicleCategory_Sport'] = 1
             X_test_selected.loc[X_test_selected.index[16], 'VehicleCategory_Utility'] = 0
         else:
-            st.write("Selected Vehicle Category: Utility")
+            #st.write("Selected Vehicle Category: Utility")
             X_test_selected.loc[X_test_selected.index[16], 'VehicleCategory_Sport'] = 0
             X_test_selected.loc[X_test_selected.index[16], 'VehicleCategory_Utility'] = 1
 
         if st.selectbox("Fault", ["Policy Holder", "Third Party"], key='Urban') == "Policy Holder":
-            st.write("Selected Fault: Third Party")
+            #st.write("Selected Fault: Third Party")
             X_test_selected.loc[X_test_selected.index[16], 'Fault'] = 1
         else:
-            st.write("Selected Fault: PolicyHolder")
+            #st.write("Selected Fault: PolicyHolder")
             X_test_selected.loc[X_test_selected.index[16], 'Fault'] = 0
 
-        if st.slider("Vehicle Price", 10000, 70000, 30000, key='vehicle_price') < 30000:
-            st.write("Selected Vehicle Price: ", st.session_state['vehicle_price'])
-            X_test_selected.loc[X_test_selected.index[16], 'VehiclePrice'] = st.session_state['vehicle_price'] 
+        if st.slider("Vehicle Price", 10000, 70000, 30000, key='vehicle_price'):
+            
+            vehicle_price_mapping = {'less than 20000': 0, '20000 to 29000': 1, '30000 to 39000': 2, '40000 to 59000': 3, '60000 to 69000': 4, 'more than 69000': 5}
+            #X['VehiclePrice'] = X['VehiclePrice'].map(vehicle_price_mapping)
+            if st.session_state['vehicle_price'] < 20000:
+               X_test_selected.loc[X_test_selected.index[16], 'VehiclePrice'] = 0
+            elif 20000 < st.session_state['vehicle_price'] < 30000:
+               X_test_selected.loc[X_test_selected.index[16], 'VehiclePrice'] = 1
+            elif 30000 < st.session_state['vehicle_price'] < 40000:
+               X_test_selected.loc[X_test_selected.index[16], 'VehiclePrice'] = 2
+            elif 40000 < st.session_state['vehicle_price'] < 60000:
+               X_test_selected.loc[X_test_selected.index[16], 'VehiclePrice'] = 3
+            elif 60000 < st.session_state['vehicle_price'] < 70000:
+               X_test_selected.loc[X_test_selected.index[16], 'VehiclePrice'] = 4
+            else:
+               X_test_selected.loc[X_test_selected.index[16], 'VehiclePrice'] = 5
         
         if st.selectbox("Sex", ["Male", "Female"], key='sex') == "Male":
-            st.write("Selected Sex: Male")
-            X_test_selected.loc[X_test_selected.index[16], 'Sex'] = 1
-        else:
-            st.write("Selected Sex: Female")
+            #st.write("Selected Sex: Male")
             X_test_selected.loc[X_test_selected.index[16], 'Sex'] = 0
+        else:
+            #st.write("Selected Sex: Female")
+            X_test_selected.loc[X_test_selected.index[16], 'Sex'] = 1
 
         base_policy = st.selectbox("Base Policy", ["Collision", "Liability", "All Perils"], key="base_policy")
         for i in ["Collision", "Liability", "All Perils"]:
             if base_policy == i:
-                st.write(f"Selected Base Policy: {i}")
+                #st.write(f"Selected Base Policy: {i}")
                 if i == "All Perils":
                     X_test_selected.loc[X_test_selected.index[16], 'BasePolicy'] = 3
                 elif i == "Collision":
@@ -793,38 +825,23 @@ if page == pages[4] :
                     X_test_selected.loc[X_test_selected.index[16], 'BasePolicy'] = 1
                 break
     
-    
-    st.dataframe(X_test_selected.iloc[[16]])
+    #st.dataframe(X_test_selected.iloc[[16]])
     #st.dataframe(y_test_selected.head(10))
     st.write("### Prediction results for the selected claim")
     #if st.checkbox("Show prediction for the selected claim"):
     scores = helper.scores(model, X_test_selected.iloc[[16]], y_test_selected.iloc[[16]], output_dict=True)
-    classification_report = scores["classification_report"]
-    cm = scores["confusion_matrix"]
-    c_report = pd.DataFrame(classification_report).transpose()
-    #st.dataframe(c_report, width=500)
-
-    c_matrix = pd.DataFrame(cm, columns=['Predicted 0', 'Predicted 1'], index=['Actual 0', 'Actual 1'])
-    st.dataframe(
-    cm.style.background_gradient(cmap="Blues")
-)
-
-    #st.write(cm)
-    #st.table(cm)
-    # plot the cm as heatmap with seaborn
-    #import seaborn as sns
-    #import matplotlib.pyplot as plt
-
-    #fig = plt.figure(figsize=(4, 4))
-    #sns.heatmap(c_matrix, annot=True, fmt='d', cmap='Blues',
-    #            xticklabels=c_matrix.columns, yticklabels=c_matrix.index)
-    #plt.title('Confusion Matrix for BaggingClassifier with DecisionTreeClassifier\n')
-    #plt.xlabel('Predicted class')
-    #plt.ylabel('Real class')
-    #st.pyplot(fig, width=600)
-    # Confusion Matrix
-
-
+    prediction = model.predict(X_test_selected.iloc[[16]])
+    
+    score = prediction
+ 
+    color = "#4CAF50" if score == 0 else "#F44336"
+    
+    st.markdown(
+        f"<div style='background-color:{color}; padding:10px; font-weight:bold;'>"
+        f"Fraud detected: {score}"
+        "</div>",
+        unsafe_allow_html=True
+    )
 
   ##############
 if page == pages[5]:
