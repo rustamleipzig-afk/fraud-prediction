@@ -827,7 +827,7 @@ if page == pages[4] :
     
     #st.dataframe(X_test_selected.iloc[[16]])
     #st.dataframe(y_test_selected.head(10))
-    st.write("### Prediction results for the selected claim")
+    st.write("### Prediction results for the selected claim  (1 = Fraud, 0 = Not Fraud)")
     #if st.checkbox("Show prediction for the selected claim"):
     scores = helper.scores(model, X_test_selected.iloc[[16]], y_test_selected.iloc[[16]], output_dict=True)
     prediction = model.predict(X_test_selected.iloc[[16]])
@@ -838,7 +838,7 @@ if page == pages[4] :
     
     st.markdown(
         f"<div style='background-color:{color}; padding:10px; font-weight:bold;'>"
-        f"Fraud detected: {score.item()} (1 = Fraud, 0 = Not Fraud)"
+        f"Fraud detected: {score.item()}"
         "</div>",
         unsafe_allow_html=True
     )
